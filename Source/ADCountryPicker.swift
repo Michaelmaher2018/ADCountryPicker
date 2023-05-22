@@ -37,7 +37,7 @@ open class ADCountryPicker: UITableViewController {
     fileprivate var searchController: UISearchController!
     fileprivate var filteredList = [ADCountry]()
     fileprivate var unsortedCountries : [ADCountry] {
-        let locale = Locale.current
+        let locale = languageee
         var unsortedCountries = [ADCountry]()
         let countriesCodes = customCountriesCode == nil ? Locale.isoRegionCodes : customCountriesCode!
         
@@ -95,7 +95,7 @@ open class ADCountryPicker: UITableViewController {
         }
         
         sections.insert(Section(), at: 0)
-        let locale = Locale.current
+        let locale = languageee
         let displayName = (locale as NSLocale).displayName(forKey: NSLocale.Key.countryCode, value: countryCode)
         let countryData = CallingCodes.filter { $0["code"] == countryCode }
         let country: ADCountry
@@ -154,6 +154,8 @@ open class ADCountryPicker: UITableViewController {
     /// The height of the flags shown. Default to 40px
     open var flagHeight = 40
     
+    open var languageee = NSLocale(localeIdentifier: "en_EG")
+
     /// Flag to indicate if the navigation bar should be hidden when search becomes active. Defaults to true
     open var hidesNavigationBarWhenPresentingSearch = true
     
@@ -262,7 +264,7 @@ open class ADCountryPicker: UITableViewController {
     public func getFlag(countryCode: String) -> UIImage? {
         let countries = self.getCountry(countryCode)
         
-        if countries.count > 0 {
+        if countries.count == 1 {
             let bundle = "assets.bundle/"
             return UIImage(named: bundle + countries.first!.code.uppercased() + ".png",
                            in: Bundle(for: ADCountryPicker.self), compatibleWith: nil)
@@ -279,7 +281,7 @@ open class ADCountryPicker: UITableViewController {
     public func getDialCode(countryCode: String) -> String? {
         let countries = self.getCountry(countryCode)
         
-        if countries.count > 0 {
+        if countries.count == 1 {
             return countries.first?.dialCode
         }
         else {
@@ -294,7 +296,7 @@ open class ADCountryPicker: UITableViewController {
     public func getCountryName(countryCode: String) -> String? {
         let countries = self.getCountry(countryCode)
         
-        if countries.count > 0 {
+        if countries.count == 1 {
             return countries.first?.name
         }
         else {
