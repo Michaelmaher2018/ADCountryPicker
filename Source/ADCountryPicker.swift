@@ -264,7 +264,7 @@ open class ADCountryPicker: UITableViewController {
     public func getFlag(countryCode: String) -> UIImage? {
         let countries = self.getCountry(countryCode)
         
-        if countries.count == 1 {
+        if countries.count >= 1 {
             let bundle = "assets.bundle/"
             return UIImage(named: bundle + countries.first!.code.uppercased() + ".png",
                            in: Bundle(for: ADCountryPicker.self), compatibleWith: nil)
